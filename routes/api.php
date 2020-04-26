@@ -21,3 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('exercises')->group(function () {
     Route::get('', 'ExerciseController@index');
 });
+
+Route::prefix('auth')->group(function() {
+    Route::post('register', 'UserController@register');
+    Route::post('login', 'UserController@login');
+});
