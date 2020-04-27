@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::prefix('exercises')->group(function () {
     Route::get('', 'ExerciseController@index');
 });
@@ -25,4 +21,8 @@ Route::prefix('exercises')->group(function () {
 Route::prefix('auth')->group(function() {
     Route::post('register', 'UserController@register');
     Route::post('login', 'UserController@login');
+});
+
+Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::get('profile', 'UserController@getAuthenticatedUser');
 });
